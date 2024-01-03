@@ -161,3 +161,23 @@ export const updateBusiness = asyncHandler(async (req, res) => {
     });
   }
 });
+
+export const getBusinesses = asyncHandler(async (req, res) => {
+  try {
+    const businesses = await businessDetailsModel.find();
+    console.log(businesses);
+
+    if (!businesses) {
+      res.status(200);
+      throw new Error("No businesses found");
+    }
+
+    res.status(200).send({
+      businesses,
+    });
+  } catch (err) {
+    res.send({
+      error: err.message,
+    });
+  }
+});
