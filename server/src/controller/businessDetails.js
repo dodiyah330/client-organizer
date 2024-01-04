@@ -1,8 +1,14 @@
 import asyncHandler from "express-async-handler";
 import businessDetailsModel from "../model/businessDetailsModel.js";
 import { isValidObjectId } from "mongoose";
+import getImageFields from "../utils/getImageFields.js";
 
 export const createBusiness = asyncHandler(async (req, res) => {
+  req.body = {
+    ...req.body,
+    ...getImageFields(req.files),
+  };
+
   const {
     companyName,
     address,
@@ -134,6 +140,13 @@ export const deleteBusiness = asyncHandler(async (req, res) => {
 });
 
 export const updateBusiness = asyncHandler(async (req, res) => {
+  if (req.files) {
+    req.body = {
+      ...req.body,
+      ...getImageFields(req.files),
+    };
+  }
+
   const { _id: businessId, ...newData } = req.body;
 
   try {
