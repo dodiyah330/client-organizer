@@ -3,6 +3,11 @@ import personalDetailsModel from "../model/personalDetailsModel.js";
 import { isValidObjectId } from "mongoose";
 
 export const createPersonal = asyncHandler(async (req, res) => {
+  req.body = {
+    ...req.body,
+    proof: `http://localhost:${process.env.PORT}/images/${req.file.filename}`,
+  };
+
   const {
     firstName,
     lastName,
@@ -17,6 +22,7 @@ export const createPersonal = asyncHandler(async (req, res) => {
 
   try {
     // Availability Check
+
     const personalAvailable = await personalDetailsModel.findOne({
       aadharNo,
     });
@@ -134,6 +140,13 @@ export const deletePersonal = asyncHandler(async (req, res) => {
 });
 
 export const updatePersonal = asyncHandler(async (req, res) => {
+  if (req.file) {
+    req.body = {
+      ...req.body,
+      proof: `http://localhost:${process.env.PORT}/images/${req.file.filename}`,
+    };
+  }
+
   const { _id: personalId, ...newData } = req.body;
 
   try {
