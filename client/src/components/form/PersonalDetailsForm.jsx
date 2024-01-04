@@ -153,15 +153,17 @@ const PersonalDetails = () => {
                 />
               </Grid>
             ))}
+            <Grid
+              item
+              xs={12}
+              style={{ display : 'flex'}}
+              justifyContent="flex-end"
+            >
+              <CustButton type="submit" variant="contained" color="primary">
+                Submit
+              </CustButton>
+            </Grid>
           </Grid>
-          <CustButton
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-          >
-            Submit
-          </CustButton>
         </form>
       </div>
     </Container>

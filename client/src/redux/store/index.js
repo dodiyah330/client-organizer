@@ -1,7 +1,13 @@
 // store.js
-import { createStore } from 'redux';
-import rootReducer from '../reducers';
 
-const store = createStore(rootReducer);
+import { configureStore } from '@reduxjs/toolkit';
+import personalDetailsReducer from '../reducers/personalDetailsReducer';
+
+const store = configureStore({
+  reducer: {
+    personalDetails: personalDetailsReducer,
+    // other reducers...
+  },
+});
 
 export default store;

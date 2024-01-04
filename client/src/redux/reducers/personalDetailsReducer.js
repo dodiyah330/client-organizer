@@ -1,20 +1,32 @@
-// reducers/personalDetailsReducer.js
+// personalDetailsReducer.js
+
+import { createSlice } from '@reduxjs/toolkit';
+import { getAllPersonalDetails } from '../actions/personalDetailsActions';
+
 const initialState = {
-  // Your initial state here
-  data: [],
+  personalDetails: [],
+  status: 'idle',
+  error: null,
 };
 
-const personalDetailsReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case "ADD_PERSONAL_DETAILS":
-      return {
-        ...state,
-        data: [...state.data, action.payload],
-      };
-    // Add more cases as needed
-    default:
-      return state;
-  }
-};
+const personalDetailsSlice = createSlice({
+  name: 'personalDetails',
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(getAllPersonalDetails.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(getAllPersonalDetails.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.personalDetails = action.payload;
+      })
+      .addCase(getAllPersonalDetails.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      });
+  },
+});
 
-export default personalDetailsReducer;
+export default personalDetailsSlice.reducer;
