@@ -15,18 +15,27 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { Link } from "react-router-dom";
 import ConfirmationModal from "../ConfirmationModal";
+import {
+  deletePersonDetails,
+  getAllPersonalDetails,
+} from "../../redux/actions/personalDetailsActions";
+import { useDispatch } from "react-redux";
 
-const PersonalDetailsTable = ({ data, onEdit, onDelete }) => {
+const PersonalDetailsTable = ({ data, onEdit }) => {
   const theme = useTheme();
+  const dispatch = useDispatch();
 
   const [deleteIndex, setDeleteIndex] = useState(null);
+  const [deleteId, setDeleteId] = useState(null);
 
-  const handleDeleteClick = (index) => {
+  const handleDeleteClick = (index, id) => {
     setDeleteIndex(index);
+    setDeleteId(id);
   };
 
-  const handleDeleteConfirm = () => {
-    onDelete(deleteIndex);
+  const handleDeleteConfirm = async () => {
+    await dispatch(deletePersonDetails(deleteId));
+    await dispatch(getAllPersonalDetails());
     setDeleteIndex(null);
   };
 
@@ -122,7 +131,7 @@ const PersonalDetailsTable = ({ data, onEdit, onDelete }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row, index) => (
+          {data?.map((row, index) => (
             <TableRow key={index}>
               <TableCell>{row.firstName}</TableCell>
               <TableCell>{row.lastName}</TableCell>
@@ -132,19 +141,21 @@ const PersonalDetailsTable = ({ data, onEdit, onDelete }) => {
               <TableCell>{row.branch}</TableCell>
               <TableCell>{row.accNo}</TableCell>
               <TableCell>{row.ifscCode}</TableCell>
-              <TableCell>{row.proof}</TableCell>
+              <TableCell>
+                <img src={row.proof} height={100} alt="" />
+              </TableCell>
               <TableCell>
                 <IconButton
                   color="primary"
                   component={Link}
-                  to={`/personal-details/${index}`}
+                  to={`/personal-details/${row._id}`}
                   onClick={() => onEdit(index)}
                 >
                   <EditIcon />
                 </IconButton>
                 <IconButton
                   color="secondary"
-                  onClick={() => handleDeleteClick(index)}
+                  onClick={() => handleDeleteClick(index, row._id)}
                 >
                   <DeleteIcon />
                 </IconButton>

@@ -1,5 +1,5 @@
 // Example usage in another component
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import PersonalDetailsTable from "../components/table/PersonalDetailsTable";
 import { Box, Container } from "@material-ui/core";
 import CustButton from "../components/CustButton";
@@ -9,46 +9,46 @@ import { getAllPersonalDetails } from "../redux/actions/personalDetailsActions";
 
 const PersonalDetailsView = () => {
   const dispatch = useDispatch();
-  const { personalDetails, status, error } = useSelector(
+  const { allPersonalDetails, status, error } = useSelector(
     (state) => state.personalDetails
   );
-  console.log({ personalDetails });
-  const data = [
-    {
-      firstName: "John",
-      lastName: "Doe",
-      aadharNo: "123456789012",
-      panNo: "ABCDE1234F",
-      bankName: "Sample Bank",
-      branch: "Main Branch",
-      accNo: "1234567890",
-      ifscCode: "ABCD1234567",
-      proof: "Proof Document",
-    },
-    {
-      firstName: "John",
-      lastName: "Doe",
-      aadharNo: "123456789012",
-      panNo: "ABCDE1234F",
-      bankName: "Sample Bank",
-      branch: "Main Branch",
-      accNo: "1234567890",
-      ifscCode: "ABCD1234567",
-      proof: "Proof Document",
-    },
-    {
-      firstName: "John",
-      lastName: "Doe",
-      aadharNo: "123456789012",
-      panNo: "ABCDE1234F",
-      bankName: "Sample Bank",
-      branch: "Main Branch",
-      accNo: "1234567890",
-      ifscCode: "ABCD1234567",
-      proof: "Proof Document",
-    },
-    // Add more data as needed
-  ];
+  console.log(allPersonalDetails);
+  // const data = [
+  //   {
+  //     firstName: "John",
+  //     lastName: "Doe",
+  //     aadharNo: "123456789012",
+  //     panNo: "ABCDE1234F",
+  //     bankName: "Sample Bank",
+  //     branch: "Main Branch",
+  //     accNo: "1234567890",
+  //     ifscCode: "ABCD1234567",
+  //     proof: "Proof Document",
+  //   },
+  //   {
+  //     firstName: "John",
+  //     lastName: "Doe",
+  //     aadharNo: "123456789012",
+  //     panNo: "ABCDE1234F",
+  //     bankName: "Sample Bank",
+  //     branch: "Main Branch",
+  //     accNo: "1234567890",
+  //     ifscCode: "ABCD1234567",
+  //     proof: "Proof Document",
+  //   },
+  //   {
+  //     firstName: "John",
+  //     lastName: "Doe",
+  //     aadharNo: "123456789012",
+  //     panNo: "ABCDE1234F",
+  //     bankName: "Sample Bank",
+  //     branch: "Main Branch",
+  //     accNo: "1234567890",
+  //     ifscCode: "ABCD1234567",
+  //     proof: "Proof Document",
+  //   },
+  //   // Add more data as needed
+  // ];
 
   const headerBoxStyle = {
     display: "flex",
@@ -83,7 +83,7 @@ const PersonalDetailsView = () => {
           back
         </CustButton>
       </Box>
-      <PersonalDetailsTable data={data} />
+      <PersonalDetailsTable data={allPersonalDetails} />
     </Container>
   );
 };

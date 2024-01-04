@@ -1,5 +1,5 @@
 // PersonalDetails.js
-import React from "react";
+import React, { useRef } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
@@ -13,6 +13,8 @@ import {
 import CustTextField from "../CustTextField";
 import CustButton from "../CustButton";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { createPerson } from "../../redux/actions/personalDetailsActions";
 
 const validationSchema = Yup.object({
   firstName: Yup.string().required("First Name is required"),
@@ -31,7 +33,7 @@ const validationSchema = Yup.object({
   ifscCode: Yup.string()
     .matches(/^[A-Za-z]{4}\d{7}$/, "Invalid IFSC Code")
     .required("IFSC Code is required"),
-  proof: Yup.string().required("Proof is required"),
+  proof: Yup.mixed().required("Proof is required"),
 });
 
 const fields = [
@@ -81,7 +83,10 @@ const fields = [
   { name: "proof", label: "Proof", autoComplete: "proof", type: "file" },
 ];
 
-const PersonalDetails = () => {
+const PersonalDetailsForm = ({ data }) => {
+  const form = useRef();
+  const dispatch = useDispatch();
+
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -95,9 +100,11 @@ const PersonalDetails = () => {
       proof: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
+    onSubmit: async (_, { resetForm }) => {
       // Handle form submission logic here
-      console.log(values);
+      const formData = new FormData(form.current);
+      await dispatch(createPerson(formData));
+      resetForm();
     },
   });
 
@@ -125,7 +132,7 @@ const PersonalDetails = () => {
             View
           </CustButton>
         </Box>
-        <form onSubmit={formik.handleSubmit}>
+        <form ref={form} onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>
             {fields.map((field, index) => (
               <Grid
@@ -156,7 +163,7 @@ const PersonalDetails = () => {
             <Grid
               item
               xs={12}
-              style={{ display : 'flex'}}
+              style={{ display: "flex" }}
               justifyContent="flex-end"
             >
               <CustButton type="submit" variant="contained" color="primary">
@@ -170,4 +177,4 @@ const PersonalDetails = () => {
   );
 };
 
-export default PersonalDetails;
+export default PersonalDetailsForm;

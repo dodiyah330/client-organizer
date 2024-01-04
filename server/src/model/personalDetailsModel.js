@@ -15,7 +15,7 @@ const personalSchema = Schema(
       required: true,
     },
     panNo: {
-      type: Number,
+      type: String,
       required: true,
     },
     bankName: {
