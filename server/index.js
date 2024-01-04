@@ -17,7 +17,6 @@ app.use(cors());
 app.use(json());
 app.use("/api/personalDetails", PersonalDetails);
 app.use("/api/businessDetails", BusinessDetails);
-// app.use("/api/patient", PatientRoutes);
 app.use(errorHandler);
 
 app.get("/", (req, res) => res.send("Hello World!"));

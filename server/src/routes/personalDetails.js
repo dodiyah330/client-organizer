@@ -1,13 +1,17 @@
 import { Router } from "express";
-import { createClient } from "../controller/personalDetails.js";
+import {
+  createPersonal,
+  getPersonal,
+  deletePersonal,
+  updatePersonal,
+  getPersonals
+} from "../controller/personalDetails.js";
 const router = Router();
 
-router.route("/create").post(createClient);
-// router.route("/").get(getClient);
-// router
-//   .route("/:id")
-//   .get(getClientById)
-//   .delete(deleteClientById)
-//   .put(updateClientById);
+router.route("/create").post(createPersonal);
+router.route("/").put(updatePersonal);
+router.route("/allPersonal").get(getPersonals);
+router.route("/:id").get(getPersonal);
+router.route("/:id").delete(deletePersonal);
 
 export default router;
