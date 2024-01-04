@@ -1,0 +1,232 @@
+{
+	"info": {
+		"_postman_id": "99eb80fb-cdd3-4546-9207-b2dea27caac8",
+		"name": "BE-Form",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30457004"
+	},
+	"item": [
+		{
+			"name": "createBusiness",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"companyName\":\"abuisalbka\",\r\n    \"address\":\"asdfsav\",\r\n    \"cinNo\":\"bashujcfusa\",\r\n    \"panNo\":\"asdfsa\",\r\n    \"tanNo\":\"asdfsdaf\",\r\n    \"gstNo\":\"sadfsdvs\",\r\n    \"proof\":\"wergfw\",\r\n    \"gstCertificate\":\"asfgs\",\r\n    \"cinCertificate\":\"sadfweafw\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/businessDetails",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"businessDetails"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getBusinessDetails",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/businessDetails/659526fddd571fd4d33d7f39",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"businessDetails",
+						"659526fddd571fd4d33d7f39"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteBusiness",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/businessDetails/659526fddd571fd4d33d7f39",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"businessDetails",
+						"659526fddd571fd4d33d7f39"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateBusiness",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"_id\": \"659526fddd571fd4d33d7f39\",\r\n    \"panNo\":\"basdad\",\r\n    \"tanNo\":\"asdfsdaadfsf\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/businessDetails/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"businessDetails",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createPersonalDetails",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\":\"bucks\",\r\n    \"lastName\":\"asdfsav\",\r\n    \"aadharNo\":\"2132333312\",\r\n    \"panNo\":\"34242442\",\r\n    \"tanNo\":\"asdfsdaf\",\r\n    \"bankName\":\"sbi\",\r\n    \"branch\":\"wergdu\",\r\n    \"ifscCode\":\"122s231swqw\",\r\n    \"proof\":\"sadfweafw\",\r\n    \"accNo\":\"1232131312\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/personalDetails/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"personalDetails",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getPersonaldetails",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/personalDetails/659644b2424c2d23278afb04",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"personalDetails",
+						"659644b2424c2d23278afb04"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deletepersonalDetails",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/personalDetails/659644b2424c2d23278afb04",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"personalDetails",
+						"659644b2424c2d23278afb04"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updatepersonaldetails",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"_id\":\"659644b2424c2d23278afb04\",\r\n    \"firstName\":\"bucks\",\r\n    \"lastName\":\"bunny\",\r\n    \"aadharNo\":\"2132333312\",\r\n    \"panNo\":\"34242442\",\r\n    \"tanNo\":\"asdfsdaf\",\r\n    \"bankName\":\"sbi\",\r\n    \"branch\":\"wergdu\",\r\n    \"ifscCode\":\"122s231swqw\",\r\n    \"proof\":\"sadfweafw\",\r\n    \"accNo\":\"1232131312\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/personalDetails",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"personalDetails"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getallpersonalDetails",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
