@@ -9,7 +9,11 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Navigate to="/personal-details" />} />
-        <Route path="/personal-details" element={<PersonalDetails />}></Route>
+        <Route
+          exact
+          path="/personal-details"
+          element={<PersonalDetails />}
+        ></Route>
         <Route path="/for-bussiness" element={<ForBussiness />}></Route>
         <Route
           path="/personal-details-view"

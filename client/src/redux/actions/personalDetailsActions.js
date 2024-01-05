@@ -6,6 +6,7 @@ import {
   deletePersonalDetails,
   createPersonal,
   fetchPersonalDetails,
+  updatePersonal,
 } from "../api";
 
 export const getAllPersonalDetails = createAsyncThunk(
@@ -28,6 +29,14 @@ export const createPerson = createAsyncThunk(
   "personalDetails/createPerson",
   async (details) => {
     const data = await createPersonal(details);
+    return data;
+  }
+);
+
+export const updatePerson = createAsyncThunk(
+  "personalDetails/updatePerson",
+  async (details) => {
+    const data = await updatePersonal(details);
     return data;
   }
 );

@@ -6,6 +6,7 @@ import {
   deletePersonDetails,
   getAllPersonalDetails,
   getPersonalDetails,
+  updatePerson,
 } from "../actions/personalDetailsActions";
 
 const initialState = {
@@ -55,6 +56,16 @@ const personalDetailsSlice = createSlice({
       })
       .addCase(deletePersonDetails.fulfilled, (state) => {
         state.status = "succeeded";
+      })
+      .addCase(updatePerson.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(updatePerson.fulfilled, (state) => {
+        state.status = "succeeded";
+      })
+      .addCase(updatePerson.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
       });
   },
 });

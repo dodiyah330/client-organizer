@@ -40,6 +40,18 @@ export const createPersonal = async (details) => {
   }
 };
 
+export const updatePersonal = async (details) => {
+  // eslint-disable-next-line no-useless-catch
+  try {
+    const response = await axios.put(`${BASE_URL}personalDetails/`, details, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const deletePersonalDetails = async (id) => {
   // eslint-disable-next-line no-useless-catch
   try {
