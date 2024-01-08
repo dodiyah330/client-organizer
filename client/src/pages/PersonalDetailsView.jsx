@@ -1,4 +1,4 @@
-// Example usage in another component
+// PersonalDetailsView.js 
 import { useEffect } from "react";
 import PersonalDetailsTable from "../components/table/PersonalDetailsTable";
 import { Box, Container } from "@material-ui/core";
@@ -12,42 +12,6 @@ const PersonalDetailsView = () => {
   const { allPersonalDetails, status, error } = useSelector(
     (state) => state.personalDetails
   );
-  const data = [
-    {
-      firstName: "John",
-      lastName: "Doe",
-      aadharNo: "123456789012",
-      panNo: "ABCDE1234F",
-      bankName: "Sample Bank",
-      branch: "Main Branch",
-      accNo: "1234567890",
-      ifscCode: "ABCD1234567",
-      proof: "Proof Document",
-    },
-    {
-      firstName: "John",
-      lastName: "Doe",
-      aadharNo: "123456789012",
-      panNo: "ABCDE1234F",
-      bankName: "Sample Bank",
-      branch: "Main Branch",
-      accNo: "1234567890",
-      ifscCode: "ABCD1234567",
-      proof: "Proof Document",
-    },
-    {
-      firstName: "John",
-      lastName: "Doe",
-      aadharNo: "123456789012",
-      panNo: "ABCDE1234F",
-      bankName: "Sample Bank",
-      branch: "Main Branch",
-      accNo: "1234567890",
-      ifscCode: "ABCD1234567",
-      proof: "Proof Document",
-    },
-    // Add more data as needed
-  ];
 
   const headerBoxStyle = {
     display: "flex",

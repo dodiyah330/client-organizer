@@ -99,7 +99,7 @@ export const getBusiness = asyncHandler(async (req, res) => {
 
     res.status(200).json({
       _id: id,
-      business_name: companyName,
+      companyName,
       address,
       cinNo,
       panNo,

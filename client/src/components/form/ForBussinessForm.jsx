@@ -11,7 +11,11 @@ import {
 } from "@material-ui/core";
 import CustTextField from "../CustTextField";
 import CustButton from "../CustButton";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { createBusiness, updateBusiness } from "../../redux/api";
+import { getAllBusinessDetails } from "../../redux/actions/businessDetailsAction";
+import { useDispatch } from "react-redux";
+import { useRef, useEffect } from "react";
 
 const validationSchema = Yup.object({
   companyName: Yup.string().required("Company Name is required"),
@@ -22,9 +26,6 @@ const validationSchema = Yup.object({
     .required("PAN Number is required"),
   tanNo: Yup.string().required("TAN Number is required"),
   gstNo: Yup.string().required("GST Number is required"),
-  proof: Yup.string().required("Proof/Document is required"),
-  gstCertificate: Yup.string().required("GST Certificate is required"),
-  cinCertificate: Yup.string().required("CIN Certificate is required"),
 });
 
 const fields = [
@@ -38,46 +39,47 @@ const fields = [
   { name: "cinNo", label: "CIN Number", autoComplete: "cinNo", type: "text" },
   { name: "panNo", label: "PAN Number", autoComplete: "panNo", type: "text" },
   { name: "tanNo", label: "TAN Number", autoComplete: "tanNo", type: "text" },
-  { name: "gstNo", label: "GST Number", autoComplete: "gstNo", type: "text" },
-  {
-    name: "proof",
-    label: "Proof/Document",
-    autoComplete: "proof",
-    type: "file",
-  },
-  {
-    name: "gstCertificate",
-    label: "GST Certificate",
-    autoComplete: "gstCertificate",
-    type: "file",
-  },
-  {
-    name: "cinCertificate",
-    label: "CIN Certificate",
-    autoComplete: "cinCertificate",
-    type: "file",
-  },
+  { name: "gstNo", label: "GST Number", autoComplete: "gstNo", type: "text" }
 ];
 
-const ForBussinessForm = () => {
+const ESCAPE_CONSTANTS = ["proof", "gstCertificate", "cinCertificate"];
+
+const INITIAL_VALUES = {
+  companyName: "",
+  address: "",
+  cinNo: "",
+  panNo: "",
+  tanNo: "",
+  gstNo: "",
+  proof: "",
+  gstCertificate: "",
+  cinCertificate: "",
+};
+
+const ForBussinessForm = ({ data, overWrittenValidationSchema, isUpdate }) => {
+  const form = useRef();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const formik = useFormik({
-    initialValues: {
-      companyName: "",
-      address: "",
-      cinNo: "",
-      panNo: "",
-      tanNo: "",
-      gstNo: "",
-      proof: "",
-      gstCertificate: "",
-      cinCertificate: "",
-    },
-    validationSchema: validationSchema,
-    onSubmit: (values) => {
+    initialValues: INITIAL_VALUES,
+    validationSchema: overWrittenValidationSchema || validationSchema,
+    onSubmit: async (_, { resetForm }) => {
       // Handle form submission logic here
-      console.log(values);
+      const formData = new FormData(form.current);
+      if (isUpdate) {
+        formData.append("_id", data._id);
+        await dispatch(updateBusiness(formData));
+        await dispatch(getAllBusinessDetails());
+        navigate("/for-bussiness-view");
+      } else {
+        await dispatch(createBusiness(formData));
+      }
+      resetForm();
     },
   });
+
+  const { setFieldValue } = formik;
 
   const headerBoxStyle = {
     display: "flex",
@@ -85,6 +87,24 @@ const ForBussinessForm = () => {
     alignItems: "center",
     margin: "15px 0",
   };
+
+  useEffect(() => {
+    if (Object.keys(data).length !== 0 && isUpdate) {
+      for (const key in data) {
+        if (key in INITIAL_VALUES && !ESCAPE_CONSTANTS.includes(key)) {
+          setFieldValue(key, data[key]);
+        }
+      }
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (!isUpdate) {
+      for (const key in INITIAL_VALUES) {
+        setFieldValue(key, "");
+      }
+    }
+  }, [isUpdate]);
 
   return (
     <Container component="main" maxWidth="xl">
@@ -103,7 +123,7 @@ const ForBussinessForm = () => {
             View
           </CustButton>
         </Box>
-        <form onSubmit={formik.handleSubmit}>
+        <form ref={form} onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>
             {fields.map((field, index) => (
               <Grid
@@ -131,6 +151,60 @@ const ForBussinessForm = () => {
                 />
               </Grid>
             ))}
+            <Grid item xs={12} sm={6}>
+              <CustTextField
+                type="file"
+                label="Proof/Document"
+                name="proof"
+                autoComplete="proof"
+                value={formik.values["proof"]}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched["proof"] && Boolean(formik.errors["proof"])
+                }
+                helperText={formik.touched["proof"] && formik.errors["proof"]}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <img src={formik.values.proof ? "" : data.proof} height={100} />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <CustTextField
+                type="file"
+                label="GST Certificate"
+                name="gstCertificate"
+                autoComplete="gstCertificate"
+                value={formik.values["gstCertificate"]}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched["gstCertificate"] && Boolean(formik.errors["gstCertificate"])
+                }
+                helperText={formik.touched["gstCertificate"] && formik.errors["gstCertificate"]}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <img src={formik.values.gstCertificate ? "" : data.gstCertificate} height={100} />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <CustTextField
+                type="file"
+                label="CIN Certificate"
+                name="cinCertificate"
+                autoComplete="cinCertificate"
+                value={formik.values["cinCertificate"]}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched["cinCertificate"] && Boolean(formik.errors["cinCertificate"])
+                }
+                helperText={formik.touched["cinCertificate"] && formik.errors["cinCertificate"]}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <img src={formik.values.cinCertificate ? "" : data.cinCertificate} height={100} />
+            </Grid>
             <Grid
               item
               xs={12}

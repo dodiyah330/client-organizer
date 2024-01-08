@@ -15,24 +15,31 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { Link } from "react-router-dom";
 import ConfirmationModal from "../ConfirmationModal";
+import { useDispatch } from "react-redux";
+import { getAllBusinessDetails, deleteBusinessDetail } from "../../redux/actions/businessDetailsAction";
 
-const ForBussinessTable = ({ data, onEdit, onDelete }) => {
+const ForBussinessTable = ({ data, onEdit }) => {
   const theme = useTheme();
+  const dispatch = useDispatch();
 
   const [deleteIndex, setDeleteIndex] = useState(null);
+  const [deleteId, setDeleteId] = useState(null);
 
-  const handleDeleteClick = (index) => {
+  const handleDeleteClick = (index, id) => {
     setDeleteIndex(index);
+    setDeleteId(id);
   };
 
-  const handleDeleteConfirm = () => {
-    onDelete(deleteIndex);
+  const handleDeleteConfirm = async () => {
+    await dispatch(deleteBusinessDetail(deleteId));
+    await dispatch(getAllBusinessDetails());
     setDeleteIndex(null);
   };
 
   const handleDeleteCancel = () => {
     setDeleteIndex(null);
   };
+
 
   return (
     <TableContainer component={Paper}>
@@ -122,7 +129,7 @@ const ForBussinessTable = ({ data, onEdit, onDelete }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row, index) => (
+          {data?.map((row, index) => (
             <TableRow key={index}>
               <TableCell>{row.companyName}</TableCell>
               <TableCell>{row.address}</TableCell>
@@ -130,21 +137,27 @@ const ForBussinessTable = ({ data, onEdit, onDelete }) => {
               <TableCell>{row.panNo}</TableCell>
               <TableCell>{row.tanNo}</TableCell>
               <TableCell>{row.gstNo}</TableCell>
-              <TableCell>{row.proof}</TableCell>
-              <TableCell>{row.gstCertificate}</TableCell>
-              <TableCell>{row.cinCertificate}</TableCell>
+              <TableCell>
+                <img src={row.proof} height={100} alt="" />
+              </TableCell>
+              <TableCell>
+                <img src={row.gstCertificate} height={100} alt="" />
+              </TableCell>
+              <TableCell>
+                <img src={row.cinCertificate} height={100} alt="" />
+              </TableCell>
               <TableCell>
                 <IconButton
                   color="primary"
                   component={Link}
-                  to={`/for-bussiness/${index}`}
+                  to={`/for-bussiness/${row._id}`}
                   onClick={() => onEdit(index)}
                 >
                   <EditIcon />
                 </IconButton>
                 <IconButton
                   color="secondary"
-                  onClick={() => handleDeleteClick(index)}
+                  onClick={() => handleDeleteClick(index, row._id)}
                 >
                   <DeleteIcon />
                 </IconButton>

@@ -1,98 +1,37 @@
 // ForBussinessView.js
-import React from "react";
+import React, { useEffect } from "react";
 import ForBussinessTable from "../components/table/ForBussinessTable";
 import { Box, Container } from "@material-ui/core";
 import CustButton from "../components/CustButton";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllBusinessDetails } from "../redux/actions/businessDetailsAction";
 
 const ForBussinessView = () => {
-  const data = [
-    {
-      companyName: "ABC Inc.",
-      address: "123 Main St, City",
-      cinNo: "U12345AB6789CD012345",
-      panNo: "ABCDE1234F",
-      tanNo: "TAN1234567A",
-      gstNo: "GST123456789012",
-      proof: "Proof Document",
-      gstCertificate: "GST Certificate",
-      cinCertificate: "CIN Certificate",
-    },
-    {
-      companyName: "XYZ Ltd.",
-      address: "456 Park Ave, Town",
-      cinNo: "U56789CD0123EF456789",
-      panNo: "FGHIJ5678K",
-      tanNo: "TAN8901234B",
-      gstNo: "GST987654321098",
-      proof: "Proof Document",
-      gstCertificate: "GST Certificate",
-      cinCertificate: "CIN Certificate",
-    },
-    {
-      companyName: "XYZ Ltd.",
-      address: "456 Park Ave, Town",
-      cinNo: "U56789CD0123EF456789",
-      panNo: "FGHIJ5678K",
-      tanNo: "TAN8901234B",
-      gstNo: "GST987654321098",
-      proof: "Proof Document",
-      gstCertificate: "GST Certificate",
-      cinCertificate: "CIN Certificate",
-    },
-    {
-      companyName: "XYZ Ltd.",
-      address: "456 Park Ave, Town",
-      cinNo: "U56789CD0123EF456789",
-      panNo: "FGHIJ5678K",
-      tanNo: "TAN8901234B",
-      gstNo: "GST987654321098",
-      proof: "Proof Document",
-      gstCertificate: "GST Certificate",
-      cinCertificate: "CIN Certificate",
-    },
-    {
-      companyName: "XYZ Ltd.",
-      address: "456 Park Ave, Town",
-      cinNo: "U56789CD0123EF456789",
-      panNo: "FGHIJ5678K",
-      tanNo: "TAN8901234B",
-      gstNo: "GST987654321098",
-      proof: "Proof Document",
-      gstCertificate: "GST Certificate",
-      cinCertificate: "CIN Certificate",
-    },
-    {
-      companyName: "XYZ Ltd.",
-      address: "456 Park Ave, Town",
-      cinNo: "U56789CD0123EF456789",
-      panNo: "FGHIJ5678K",
-      tanNo: "TAN8901234B",
-      gstNo: "GST987654321098",
-      proof: "Proof Document",
-      gstCertificate: "GST Certificate",
-      cinCertificate: "CIN Certificate",
-    },
-    {
-      companyName: "XYZ Ltd.",
-      address: "456 Park Ave, Town",
-      cinNo: "U56789CD0123EF456789",
-      panNo: "FGHIJ5678K",
-      tanNo: "TAN8901234B",
-      gstNo: "GST987654321098",
-      proof: "Proof Document",
-      gstCertificate: "GST Certificate",
-      cinCertificate: "CIN Certificate",
-    },
-    // Add more data as needed
-  ];
-
+  const dispatch = useDispatch();
+  const { allBusinessDetails, status, error } = useSelector(
+    (state) => state.businessDetails
+  );
+  
   const headerBoxStyle = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     margin: "15px 0",
   };
+
+  useEffect(() => {
+    // Dispatch the action to fetch business details when the component mounts
+    dispatch(getAllBusinessDetails());
+  }, [dispatch]);
+
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
+
+  if (status === "failed") {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <Container>
@@ -107,7 +46,7 @@ const ForBussinessView = () => {
           back
         </CustButton>
       </Box>
-      <ForBussinessTable data={data} />
+      <ForBussinessTable data={allBusinessDetails} />
     </Container>
   );
 };

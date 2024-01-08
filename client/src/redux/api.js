@@ -61,3 +61,62 @@ export const deletePersonalDetails = async (id) => {
     throw error;
   }
 };
+
+// businessDetails 
+export const fetchAllBusinessDetails = async () => {
+  // eslint-disable-next-line no-useless-catch
+  try {
+    const response = await axios.get(`${BASE_URL}businessDetails/allBusinesses`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const fetchBusinessDetails = async (id) => {
+  // eslint-disable-next-line no-useless-catch
+  try {
+    const response = await axios.get(`${BASE_URL}businessDetails/${id}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const createBusiness = async (details) => {
+  // eslint-disable-next-line no-useless-catch
+  try {
+    const response = await axios.post(
+      `${BASE_URL}businessDetails/create`,
+      details,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateBusiness = async (details) => {
+  // eslint-disable-next-line no-useless-catch
+  try {
+    const response = await axios.put(`${BASE_URL}businessDetails/`, details, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const deleteBusinessDetails = async (id) => {
+  // eslint-disable-next-line no-useless-catch
+  try {
+    const response = await axios.delete(`${BASE_URL}businessDetails/${id}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
