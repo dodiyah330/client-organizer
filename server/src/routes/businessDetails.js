@@ -15,7 +15,7 @@ const imgUpload = upload.fields([
   { name: "cinCertificate", maxCount: 1 },
 ]);
 
-router.route("/").post(imgUpload, createBusiness);
+router.route("/create").post(imgUpload, createBusiness);
 router.route("/").put(imgUpload, updateBusiness);
 router.route("/allBusinesses").get(getBusinesses);
 router.route("/:id").get(getBusiness);

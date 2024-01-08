@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "99eb80fb-cdd3-4546-9207-b2dea27caac8",
+		"_postman_id": "736077da-373a-4fe7-bc15-ba3d3f21a764",
 		"name": "BE-Form",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "30457004"
@@ -120,6 +120,14 @@
 			"response": []
 		},
 		{
+			"name": "getallbussinessDetails",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
 			"name": "createPersonalDetails",
 			"request": {
 				"method": "POST",
@@ -224,7 +232,10 @@
 			"name": "getallpersonalDetails",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": ""
+				}
 			},
 			"response": []
 		}

@@ -1,26 +1,29 @@
 import asyncHandler from "express-async-handler";
 import personalDetailsModel from "../model/personalDetailsModel.js";
 import { isValidObjectId } from "mongoose";
+import { uploadToCloudinary } from "../middleware/multer.middleware.js";
 
 export const createPersonal = asyncHandler(async (req, res) => {
-  req.body = {
-    ...req.body,
-    proof: `http://localhost:${process.env.PORT}/images/${req.file.filename}`,
-  };
-
-  const {
-    firstName,
-    lastName,
-    aadharNo,
-    panNo,
-    bankName,
-    branch,
-    accNo,
-    ifscCode,
-    proof,
-  } = req.body;
-
   try {
+    const result = await uploadToCloudinary(req.file);
+
+    req.body = {
+      ...req.body,
+      proof: result.secure_url,
+    };
+
+    const {
+      firstName,
+      lastName,
+      aadharNo,
+      panNo,
+      bankName,
+      branch,
+      accNo,
+      ifscCode,
+      proof,
+    } = req.body;
+
     // Availability Check
 
     const personalAvailable = await personalDetailsModel.findOne({
@@ -47,7 +50,7 @@ export const createPersonal = asyncHandler(async (req, res) => {
     if (personal) {
       res.status(201).json({
         _id: personal.id,
-        first_name: firstName,
+        data: personal,
         message: "Personal created successfully",
       });
     } else {
@@ -55,7 +58,7 @@ export const createPersonal = asyncHandler(async (req, res) => {
       throw new Error("Personal data is not valid");
     }
   } catch (err) {
-    res.send({
+    res.status(500).send({
       error: err.message,
     });
   }
@@ -140,16 +143,16 @@ export const deletePersonal = asyncHandler(async (req, res) => {
 });
 
 export const updatePersonal = asyncHandler(async (req, res) => {
-  if (req.file) {
+  try {
+    const result = await uploadToCloudinary(req.file);
+
     req.body = {
       ...req.body,
-      proof: `http://localhost:${process.env.PORT}/images/${req.file.filename}`,
+      proof: result.secure_url,
     };
-  }
 
   const { _id: personalId, ...newData } = req.body;
 
-  try {
     if (!isValidObjectId(personalId)) {
       res.status(400);
       throw new Error("Invalid Id");
@@ -166,7 +169,9 @@ export const updatePersonal = asyncHandler(async (req, res) => {
     await personalDetailsModel.findByIdAndUpdate(personalId, newData, options);
 
     res.status(200).json({
-      message: "Updated succesfully",
+      _id: personal.id,
+      data: personal,
+      message: "Personal Updated succesfully"
     });
   } catch (err) {
     res.send({
@@ -178,7 +183,6 @@ export const updatePersonal = asyncHandler(async (req, res) => {
 export const getPersonals = asyncHandler(async (req, res) => {
   try {
     const personal = await personalDetailsModel.find();
-    console.log(personal);
 
     if (!personal) {
       res.status(200);
