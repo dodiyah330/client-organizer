@@ -26,6 +26,9 @@ const validationSchema = Yup.object({
     .required("PAN Number is required"),
   tanNo: Yup.string().required("TAN Number is required"),
   gstNo: Yup.string().required("GST Number is required"),
+  proof: Yup.mixed().required("Proof is required"),
+  gstCertificate: Yup.mixed().required("GST Certificate is required"),
+  cinCertificate: Yup.mixed().required("CIN Certificate is required"),
 });
 
 const fields = [
@@ -39,7 +42,7 @@ const fields = [
   { name: "cinNo", label: "CIN Number", autoComplete: "cinNo", type: "text" },
   { name: "panNo", label: "PAN Number", autoComplete: "panNo", type: "text" },
   { name: "tanNo", label: "TAN Number", autoComplete: "tanNo", type: "text" },
-  { name: "gstNo", label: "GST Number", autoComplete: "gstNo", type: "text" }
+  { name: "gstNo", label: "GST Number", autoComplete: "gstNo", type: "text" },
 ];
 
 const ESCAPE_CONSTANTS = ["proof", "gstCertificate", "cinCertificate"];
@@ -129,7 +132,7 @@ const ForBussinessForm = ({ data, overWrittenValidationSchema, isUpdate }) => {
               <Grid
                 item
                 xs={12}
-                sm={index === fields.length - 1 ? 12 : 6}
+                sm={index === fields.length ? 12 : 6}
                 key={field.name}
               >
                 <CustTextField
@@ -166,9 +169,11 @@ const ForBussinessForm = ({ data, overWrittenValidationSchema, isUpdate }) => {
                 helperText={formik.touched["proof"] && formik.errors["proof"]}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <img src={formik.values.proof ? "" : data.proof} height={100} />
-            </Grid>
+            {isUpdate && (
+              <Grid item xs={12} sm={6}>
+                <img src={formik.values.proof ? "" : data.proof} height={100} />
+              </Grid>
+            )}
             <Grid item xs={12} sm={6}>
               <CustTextField
                 type="file"
@@ -179,14 +184,23 @@ const ForBussinessForm = ({ data, overWrittenValidationSchema, isUpdate }) => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 error={
-                  formik.touched["gstCertificate"] && Boolean(formik.errors["gstCertificate"])
+                  formik.touched["gstCertificate"] &&
+                  Boolean(formik.errors["gstCertificate"])
                 }
-                helperText={formik.touched["gstCertificate"] && formik.errors["gstCertificate"]}
+                helperText={
+                  formik.touched["gstCertificate"] &&
+                  formik.errors["gstCertificate"]
+                }
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <img src={formik.values.gstCertificate ? "" : data.gstCertificate} height={100} />
-            </Grid>
+            {isUpdate && (
+              <Grid item xs={12} sm={6}>
+                <img
+                  src={formik.values.gstCertificate ? "" : data.gstCertificate}
+                  height={100}
+                />
+              </Grid>
+            )}
             <Grid item xs={12} sm={6}>
               <CustTextField
                 type="file"
@@ -197,14 +211,23 @@ const ForBussinessForm = ({ data, overWrittenValidationSchema, isUpdate }) => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 error={
-                  formik.touched["cinCertificate"] && Boolean(formik.errors["cinCertificate"])
+                  formik.touched["cinCertificate"] &&
+                  Boolean(formik.errors["cinCertificate"])
                 }
-                helperText={formik.touched["cinCertificate"] && formik.errors["cinCertificate"]}
+                helperText={
+                  formik.touched["cinCertificate"] &&
+                  formik.errors["cinCertificate"]
+                }
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <img src={formik.values.cinCertificate ? "" : data.cinCertificate} height={100} />
-            </Grid>
+            {isUpdate && (
+              <Grid item xs={12} sm={6}>
+                <img
+                  src={formik.values.cinCertificate ? "" : data.cinCertificate}
+                  height={100}
+                />
+              </Grid>
+            )}
             <Grid
               item
               xs={12}

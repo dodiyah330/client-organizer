@@ -199,9 +199,11 @@ const PersonalDetailsForm = ({
                 />
               </Grid>
             ))}
-            <Grid item xs={12} sm={6}>
-              <img src={formik.values.proof ? "" : data.proof} height={100} />
-            </Grid>
+            {isUpdate && (
+              <Grid item xs={12} sm={6}>
+                <img src={formik.values.proof ? "" : data.proof} height={100} />
+              </Grid>
+            )}
             <Grid
               item
               xs={12}
