@@ -39,7 +39,7 @@ const ForBussinessView = () => {
         <h2>For Business View</h2>
         <CustButton
           component={Link}
-          to="/for-bussiness"
+          to="/for-business"
           variant="contained"
           color="primary"
         >

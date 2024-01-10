@@ -144,14 +144,16 @@ export const deletePersonal = asyncHandler(async (req, res) => {
 
 export const updatePersonal = asyncHandler(async (req, res) => {
   try {
-    const result = await uploadToCloudinary(req.file);
+    if (req.file) {
+      const result = await uploadToCloudinary(req.file);
 
-    req.body = {
-      ...req.body,
-      proof: result.secure_url,
-    };
+      req.body = {
+        ...req.body,
+        proof: result.secure_url,
+      };
+    }
 
-  const { _id: personalId, ...newData } = req.body;
+    const { _id: personalId, ...newData } = req.body;
 
     if (!isValidObjectId(personalId)) {
       res.status(400);
@@ -171,14 +173,15 @@ export const updatePersonal = asyncHandler(async (req, res) => {
     res.status(200).json({
       _id: personal.id,
       data: personal,
-      message: "Personal Updated succesfully"
+      message: "Personal Updated successfully",
     });
   } catch (err) {
-    res.send({
+    res.status(500).json({
       error: err.message,
     });
   }
 });
+
 
 export const getPersonals = asyncHandler(async (req, res) => {
   try {

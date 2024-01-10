@@ -147,20 +147,39 @@ export const deleteBusiness = asyncHandler(async (req, res) => {
 });
 
 export const updateBusiness = asyncHandler(async (req, res) => {
-
   try {
-    const proofResult = await uploadToCloudinary(req.files.proof[0]);
-    const gstCertificateResult = await uploadToCloudinary(req.files.gstCertificate[0]);
-    const cinCertificateResult = await uploadToCloudinary(req.files.cinCertificate[0]);
+    let proofResult, gstCertificateResult, cinCertificateResult;
 
-    req.body = {
+    if (req.files.proof) {
+      proofResult = await uploadToCloudinary(req.files.proof[0]);
+    }
+
+    if (req.files.gstCertificate) {
+      gstCertificateResult = await uploadToCloudinary(req.files.gstCertificate[0]);
+    }
+
+    if (req.files.cinCertificate) {
+      cinCertificateResult = await uploadToCloudinary(req.files.cinCertificate[0]);
+    }
+
+    let newData = {
       ...req.body,
-      proof: proofResult.secure_url,
-      gstCertificate: gstCertificateResult.secure_url,
-      cinCertificate: cinCertificateResult.secure_url,
     };
 
-  let { _id: businessId, ...newData } = req.body;
+    // Update fields only if files were provided
+    if (proofResult) {
+      newData.proof = proofResult.secure_url;
+    }
+
+    if (gstCertificateResult) {
+      newData.gstCertificate = gstCertificateResult.secure_url;
+    }
+
+    if (cinCertificateResult) {
+      newData.cinCertificate = cinCertificateResult.secure_url;
+    }
+
+    let { _id: businessId, ...updatedData } = newData;
 
     if (!isValidObjectId(businessId)) {
       res.status(400);
@@ -175,14 +194,7 @@ export const updateBusiness = asyncHandler(async (req, res) => {
     }
 
     const options = { runValidators: true };
-    await businessDetailsModel.findByIdAndUpdate(businessId, newData, options);
-
-      newData = {
-        ...newData,
-        proof: proofResult.secure_url,
-        gstCertificate: gstCertificateResult.secure_url,
-        cinCertificate: cinCertificateResult.secure_url,
-      };
+    await businessDetailsModel.findByIdAndUpdate(businessId, updatedData, options);
 
     res.status(200).json({
       _id: business.id,
@@ -195,6 +207,7 @@ export const updateBusiness = asyncHandler(async (req, res) => {
     });
   }
 });
+
 
 export const getBusinesses = asyncHandler(async (req, res) => {
   try {

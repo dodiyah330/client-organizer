@@ -14,20 +14,20 @@ export default function App() {
           path="/personal-details"
           element={<PersonalDetails />}
         ></Route>
-        <Route path="/for-bussiness" element={<ForBussiness />}></Route>
+        <Route path="/for-business" element={<ForBussiness />}></Route>
         <Route
           path="/personal-details-view"
           element={<PersonalDetailsView />}
         ></Route>
         <Route
-          path="/for-bussiness-view"
+          path="/for-business-view"
           element={<ForBussinessView />}
         ></Route>
         <Route
           path="/personal-details/:id"
           element={<PersonalDetails />}
         ></Route>
-        <Route path="/for-bussiness/:id" element={<ForBussiness />}></Route>
+        <Route path="/for-business/:id" element={<ForBussiness />}></Route>
       </Routes>
     </BrowserRouter>
   );

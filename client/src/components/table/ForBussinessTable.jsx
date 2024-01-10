@@ -18,7 +18,7 @@ import ConfirmationModal from "../ConfirmationModal";
 import { useDispatch } from "react-redux";
 import { getAllBusinessDetails, deleteBusinessDetail } from "../../redux/actions/businessDetailsAction";
 
-const ForBussinessTable = ({ data, onEdit }) => {
+const ForBussinessTable = ({ data }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
 
@@ -150,8 +150,7 @@ const ForBussinessTable = ({ data, onEdit }) => {
                 <IconButton
                   color="primary"
                   component={Link}
-                  to={`/for-bussiness/${row._id}`}
-                  onClick={() => onEdit(index)}
+                  to={`/for-business/${row._id}`}
                 >
                   <EditIcon />
                 </IconButton>

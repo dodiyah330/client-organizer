@@ -71,7 +71,7 @@ const ForBussinessForm = ({ data, overWrittenValidationSchema, isUpdate }) => {
         formData.append("_id", data._id);
         await dispatch(updateBusiness(formData));
         await dispatch(getAllBusinessDetails());
-        navigate("/for-bussiness-view");
+        navigate("/for-business-view");
       } else {
         await dispatch(createBusiness(formData));
       }
@@ -116,7 +116,7 @@ const ForBussinessForm = ({ data, overWrittenValidationSchema, isUpdate }) => {
           </Typography>
           <CustButton
             component={Link}
-            to="/for-bussiness-view"
+            to="/for-business-view"
             variant="contained"
             color="primary"
           >

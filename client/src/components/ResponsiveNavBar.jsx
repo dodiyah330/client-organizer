@@ -27,7 +27,7 @@ const ResponsiveNavbar = () => {
                   <CustButton component={Link} to='/personal-details' color="inherit">Personal Information</CustButton>
                 </Grid>
                 <Grid item>
-                  <CustButton component={Link} to='/for-bussiness' color="inherit">For Business</CustButton>
+                  <CustButton component={Link} to='/for-business' color="inherit">For Business</CustButton>
                 </Grid>
               </Grid>
             </Grid>

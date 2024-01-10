@@ -21,7 +21,7 @@ import {
 } from "../../redux/actions/personalDetailsActions";
 import { useDispatch } from "react-redux";
 
-const PersonalDetailsTable = ({ data, onEdit }) => {
+const PersonalDetailsTable = ({ data }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
 
@@ -149,7 +149,6 @@ const PersonalDetailsTable = ({ data, onEdit }) => {
                   color="primary"
                   component={Link}
                   to={`/personal-details/${row._id}`}
-                  onClick={() => onEdit(index)}
                 >
                   <EditIcon />
                 </IconButton>
